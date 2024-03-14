@@ -1,0 +1,59 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+
+# Load the dataset
+data = pd.read_excel("C:/Users/KEERTHINIKITA/Downloads/Titanic.xls")
+print(data.columns)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop("survived", axis=1), data["survived"], test_size=0.2, random_state=42)
+
+# Scale the features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Create a logistic regression model
+model = LogisticRegression()
+
+# Train the model
+model.fit(X_train_scaled, y_train)
+
+# Evaluate the model
+accuracy = model.score(X_test_scaled, y_test)
+print("Accuracy:", accuracy)
+
+
+# Convert string to float
+data['fare'] = data['fare'].astype(float)
+
+# Handle missing values
+data.fillna(0, inplace=True) 
+
+# Feature engineering
+# Add a new feature 'FamilySize' by combining 'SibSp' and 'Parch'
+data['FamilySize'] = data['sibsp'] + data['parch']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(data.drop("survived", axis=1), data["survived"], test_size=0.2, random_state=42)
+
+# Scale the features
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Create a logistic regression model
+model = LogisticRegression()
+
+# Train the model
+model.fit(X_train_scaled, y_train)
+
+# Evaluate the model
+accuracy = model.score(X_test_scaled, y_test)
+print("Accuracy:", accuracy)
